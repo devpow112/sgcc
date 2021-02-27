@@ -3,6 +3,8 @@
 import argparse
 import os
 import struct
+import shutil
+import errno
 
 CHECKSUM_HEADER_OFFSET = 0x18E
 
@@ -15,38 +17,53 @@ def main():
     nargs = 1,
     help = 'Relative path to the Sega Genesis ROM file.'
   )
+  parser.add_argument(
+    '-i',
+    '--in-place',
+    action="store_true",
+    help="Make header change in-place, otherwise make another file"
+  )
   args = parser.parse_args()
-  print('Reading checksum from file...')
-  with open(args.path[0], 'r+b') as genesis_file:
-    valid_genesis_file = verify_console_name(genesis_file)
-    if not valid_genesis_file:
-      print('\nERROR: File is not a valid Genesis or Mega Drive ROM file.')
-      return
-    header_checksum = read_checksum(genesis_file)
-    print('Header checksum =',)
-    print_word(header_checksum)
+  source_path = os.path.abspath(args.path[0])
+  if not os.path.isfile(source_path):
+    print('ERROR: Input file is not valid or does not exist.')
+    return errno.EINVAL
+  if not args.in_place:
+    source_path_parts = os.path.splitext(source_path)
+    new_path = source_path_parts[0] + '_cc'
+    destination_path = new_path + source_path_parts[1]
+    shutil.copyfile(source_path, destination_path)
+  else:
+    destination_path = source_path
+  print('Reading ROM header checksum ...')
+  with open(source_path, 'rb') as source_file:
+    valid_source_file = verify_console_name(source_file)
+    if not valid_source_file:
+      print('ERROR: File is not a valid Genesis or Mega Drive ROM file.')
+      return errno.ENOTRECOVERABLE
+    header_checksum = read_checksum(source_file)
+    print('ROM Header checksum:', format_word(header_checksum))
     print('Computing checksum...')
-    computed_checksum = compute_checksum(genesis_file)
-    print('Computed checksum = ',)
-    print_word(computed_checksum)
+    computed_checksum = compute_checksum(source_file)
+    print('Computed checksum:', format_word(computed_checksum))
     if header_checksum == computed_checksum:
-      print('\nChecksums match!')
-      return
-    print('\nWARNING: Checksums do not match!')
-    print('\nWriting computed checksum to header...')
-    write_checksum(genesis_file, computed_checksum)
-    print('Writing complete. The header should now be updated.')
-    print('Verifying header checksum...')
-    header_checksum = read_checksum(genesis_file)
+      print('Checksums match!')
+      return 0
+    print('WARNING: Checksums do not match!')
+  with open(destination_path, 'r+b') as destination_file:
+    print('Writing ROM header checksum ...')
+    write_checksum(destination_file, computed_checksum)
+    print('Verifying ROM header checksum ...')
+    header_checksum = read_checksum(destination_file)
     if header_checksum == computed_checksum:
-      print('\nChecksums match!')
-      return
-    print('\nERROR: Failed to write to file')
-    print('Aborting script...')
-    return
+      print('Checksums match!')
+      return 0
+    print('ERROR: Failed to write ROM header checksum to file')
+    print('Aborting script ...')
+    return errno.ENOTRECOVERABLE
 
-def print_word(word):
-  print('0x{0:04X}'.format(word))
+def format_word(word):
+  return '0x{0:04X}'.format(word)
 
 def read_byte_as_int(open_file):
   return ord(open_file.read(1))
@@ -87,4 +104,4 @@ def write_checksum(open_file, checksum):
   open_file.seek(CHECKSUM_HEADER_OFFSET)
   open_file.write(struct.pack('>H', checksum))
 
-main()
+exit(main())
