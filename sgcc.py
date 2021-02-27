@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
-import struct
-import shutil
 import errno
+import os
+import shutil
+import struct
 
 CHECKSUM_HEADER_OFFSET = 0x18E
 
