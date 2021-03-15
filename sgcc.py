@@ -15,6 +15,7 @@ def main():
   parser.add_argument(
     'path',
     nargs = 1,
+    type = str,
     help = 'Relative path to the Sega Genesis ROM file.'
   )
   parser.add_argument(
@@ -23,6 +24,13 @@ def main():
     action="store_true",
     help="Make header change in-place, otherwise make another file"
   )
+  parser.add_argument(
+    '-s',
+    '--suffix',
+    type = str,
+    default = 'cc',
+    help="Custom suffix to use when not doing in-place fixing"
+  )
   args = parser.parse_args()
   source_path = os.path.abspath(args.path[0])
   if not os.path.isfile(source_path):
@@ -30,7 +38,7 @@ def main():
     return errno.EINVAL
   if not args.in_place:
     source_path_parts = os.path.splitext(source_path)
-    new_path = source_path_parts[0] + '_cc'
+    new_path = source_path_parts[0] + '_' + args.suffix
     destination_path = new_path + source_path_parts[1]
     shutil.copyfile(source_path, destination_path)
   else:
