@@ -24,7 +24,7 @@ jobs:
       - name: Update LICENSE
         run: sed -i -E "s/$REGEX/\1${{steps.year.outputs.value}}\2/" LICENSE
         env:
-          REGEX: '^(Copyright \(c\) )[0-9]{4}( Devon Powell)$'
+          REGEX: ^(Copyright \(c\) )[0-9]{4}( Devon Powell)$
       - name: Check for changes
         id: changes
         run: |
@@ -35,13 +35,12 @@ jobs:
           git config user.name $COMMIT_USERNAME
           git config user.email $COMMIT_EMAIL
           git add LICENSE
-          git commit -m "Update license year to $YEAR"
+          git commit -m 'Update license year to ${{steps.year.outputs.value}}'
           CREDENTIALS="x-access-token:$GITHUB_TOKEN"
           URL="https://$CREDENTIALS@github.com/${{github.repository}}.git"
           git remote set-url origin $URL
           git push origin main
         env:
-          GITHUB_TOKEN: ${{secrets.UPDATE_LICENSE_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.PERSONAL_GITHUB_TOKEN}}
           COMMIT_USERNAME: github-actions[bot]
           COMMIT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-          YEAR: ${{steps.year.outputs.value}}
