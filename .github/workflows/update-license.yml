@@ -68,7 +68,7 @@ jobs:
               console.log('Created new pull request');
               return createResult.data.number;
             } else {
-              const prNumber = pullRequests.data.first().number;
+              const prNumber = pullRequests.data[0].number;
               github.rest.issues.update({
                 issue_number: prNumber,
                 title, owner, repo
