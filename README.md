@@ -11,19 +11,22 @@ A [Sega Genesis] ROM checksum corrector.
 Script can be run on any platform that can run **Python**. By default the ROM
 file will not be changed and it will create a new file with `_cc` appended to
 the filename. You can supply either `-i` or `--in-place` to have it modify the
-ROM in-place or supply `-s` or `--suffix` to change the default appented suffix
+ROM in-place or supply `-s` or `--suffix` to change the default appended suffix
 to something else.
 
-### Windows
+```console
+usage: [python] sgcc.py [-h] [-i] [-s SUFFIX] path
 
-```cmd
-python sgcc.py [-i|--in-place] [-s|--suffix] [path to ROM file]
-```
+Compares and corrects the checksum for a Sega Genesis ROM.
 
-### Linux
+positional arguments:
+  path                  Relative path to the Sega Genesis ROM file.
 
-```bash
-./sgcc.py [-i|--in-place] [-s|--suffix] [path to ROM file]
+optional arguments:
+  -h, --help            show this help message and exit
+  -i, --in-place        Make header change in-place, otherwise make another file
+  -s SUFFIX, --suffix SUFFIX
+                        Custom suffix to use when not doing in-place fixing
 ```
 
 <!-- links -->
