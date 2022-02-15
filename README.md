@@ -4,7 +4,7 @@ A [Sega Genesis] ROM checksum corrector.
 
 ## Prerequisites
 
-- [Python](https://www.python.org/downloads/windows)
+- [Python]
 
 ## Usage
 
@@ -31,3 +31,4 @@ optional arguments:
 
 <!-- links -->
 [Sega Genesis]: https://en.wikipedia.org/wiki/Sega_Genesis
+[Python]: https://www.python.org/downloads/windows
