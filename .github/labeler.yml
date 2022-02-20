@@ -1,0 +1,6 @@
+documentation:
+  - '*.md'
+github-actions:
+  - .github/workflows/*.yml
+python:
+  - '*.py'
