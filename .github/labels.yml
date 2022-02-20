@@ -8,7 +8,7 @@
   description: Clean-up or refactor of something already existing
   color: a7afe5
 - name: dependencies
-  description: Pull requests that updates a dependency file
+  description: Pull requests that update a dependency file
   color: 0366d6
 - name: documentation
   description: Improvements or additions to documentation
@@ -20,7 +20,7 @@
   description: New feature or request
   color: a2eeef
 - name: github-actions
-  description: Pull requests that updates GitHub Actions code
+  description: Pull requests that update GitHub Actions code
   color: 000000
 - name: good first issue
   description: Good for newcomers
@@ -31,6 +31,9 @@
 - name: invalid
   description: This doesn't seem right
   color: e4e669
+- name: python
+  description: Pull requests that update Python code
+  color: 2b67c6
 - name: question
   description: Further information is requested
   color: d876e3
