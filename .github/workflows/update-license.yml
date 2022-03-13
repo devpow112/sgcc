@@ -25,8 +25,8 @@ jobs:
         run: |
           OLD_YEAR=$(grep -oEi "$REGEX" LICENSE | grep -oEi '[0-9]{4}')
           NEW_YEAR=$(date +%Y)
-          UPDATE_TITLE="chore(license-year): bump from $OLD_YEAR to $NEW_YEAR"
-          UPDATE_BODY="Bump LICENSE year from $OLD_YEAR to $NEW_YEAR."
+          UPDATE_TITLE="Bump LICENSE year from $OLD_YEAR to $NEW_YEAR"
+          UPDATE_BODY="$UPDATE_TITLE."
           echo "::set-output name=license-year::$NEW_YEAR"
           echo "::set-output name=update-title::$UPDATE_TITLE"
           echo "::set-output name=update-body::$UPDATE_BODY"
