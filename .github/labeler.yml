@@ -1,6 +1,14 @@
 documentation:
-  - '*.md'
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.md'
+      - .github/CODEOWNERS
+      - LICENSE
 github-actions:
-  - .github/workflows/*.yml
+  - changed-files:
+    - any-glob-to-any-file:
+      - .github/workflows/*.yml
 python:
-  - '*.py'
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/*.py'
