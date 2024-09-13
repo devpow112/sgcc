@@ -34,7 +34,7 @@ jobs:
         run: |
           sed -i -E "s/$REGEX/\1${{steps.info.outputs.license-year}}\2/" LICENSE
       - name: Handle changes
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v7.0.2
         id: changes
         with:
           token: ${{secrets.AUTOMATION_TOKEN}}
