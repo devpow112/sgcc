@@ -18,7 +18,7 @@ jobs:
       REGEX: ^(Copyright \(c\) )[0-9]{4}( Devon Powell)$
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
       - name: Determine info
         shell: bash
         id: info
@@ -34,7 +34,7 @@ jobs:
         run: |
           sed -i -E "s/$REGEX/\1${{steps.info.outputs.license-year}}\2/" LICENSE
       - name: Handle changes
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v7.0.5
         id: changes
         with:
           token: ${{secrets.AUTOMATION_TOKEN}}
