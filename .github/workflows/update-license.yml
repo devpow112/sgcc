@@ -35,7 +35,7 @@ jobs:
           sed -i -E "s/$REGEX/\1${{steps.info.outputs.license-year}}\2/" LICENSE
       - name: Generate app token
         id: app-token
-        uses: actions/create-github-app-token@v1.11.6
+        uses: actions/create-github-app-token@v1.11.7
         with:
           app-id: ${{secrets.GH_APP_ID}}
           private-key: ${{secrets.GH_APP_PRIVATE_KEY}}
