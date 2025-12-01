@@ -18,7 +18,7 @@ jobs:
       REGEX: ^(Copyright \(c\) )[0-9]{4}( Devon Powell)$
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.1
+        uses: actions/checkout@v6.0.0
       - name: Determine info
         shell: bash
         id: info
@@ -53,7 +53,7 @@ jobs:
           GH_APP_SLUG: ${{steps.app-token.outputs.app-slug}}
           GH_TOKEN: ${{steps.app-token.outputs.token}}
       - name: Handle changes
-        uses: peter-evans/create-pull-request@v7.0.8
+        uses: peter-evans/create-pull-request@v7.0.9
         id: changes
         with:
           token: ${{steps.app-token.outputs.token}}
